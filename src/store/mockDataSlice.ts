@@ -1,22 +1,33 @@
 // mockDataSlice.js
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { CreateCompaniesMockList } from '../mock';
+import { CreatelistedCompaniesList } from '../mock';
 import { ItemCompany, ItemWorker } from '../components/ItemRow/ItemRow.props';
 
-const COMPANIES_MOCK = CreateCompaniesMockList(Math.round(Math.random() * 20));
+const COMPANIES_MOCK = CreatelistedCompaniesList(Math.round(Math.random() * 20));
+const companiesInitialMap: Map<string, ItemCompany> = new Map();
+COMPANIES_MOCK.forEach((company) => {
+	companiesInitialMap.set(company.id, company);
+});
 
 interface MockDataState {
-	companiesMock: ItemCompany[];
-	selectedCompanies: ItemCompany[];
-	// listedWorkers: ItemWorker[];
+	isAllCompaniesChecked: boolean;
+	isAllWorkersChecked: boolean;
+	listedCompanies: Record<string, ItemCompany>;
+	// selectedCompanies: Record<string, ItemCompany>;
+	selectedCompaniesIds: string[];
 	listedWorkers: Record<string, ItemWorker>;
 }
 
 const initialState: MockDataState = {
-	companiesMock: COMPANIES_MOCK, // ваш начальный стейт для компаний
-	selectedCompanies: [],
-	// listedWorkers: []
+	// listedCompanies: COMPANIES_MOCK, // ваш начальный стейт для компаний
+	listedCompanies: Object.fromEntries(companiesInitialMap), // ваш начальный стейт для компаний
+
+	isAllCompaniesChecked: false,
+	isAllWorkersChecked: false,
+	// selectedCompanies: {},
+	selectedCompaniesIds: [],
+
 	listedWorkers: {}
 };
 
@@ -24,44 +35,31 @@ const mockDataSlice = createSlice({
 	name: 'mockData',
 	initialState,
 	reducers: {
-		setCompaniesMock: (state, action) => {
-			state.companiesMock = action.payload;
+		setlistedCompanies: (state, action) => {
+			state.listedCompanies = action.payload;
 		},
 		addCompanyItemSelection: (state, action: PayloadAction<ItemCompany>) => {
 			if (!action.payload) {
 				return;
 			}
-			if (state.selectedCompanies.some((company) => company.id === action.payload.id)) {
+			// if (state.selectedCompanies[action.payload.id]) {
+			// 	return;
+			// }
+			if (state.selectedCompaniesIds.includes(action.payload.id)) {
 				return;
 			}
 
-			state.selectedCompanies.push(action.payload);
+			// state.selectedCompanies[action.payload.id] = action.payload;
 
+			state.selectedCompaniesIds.push(action.payload.id);
+
+			// update workers list
 			if (action.payload.workersList.length) {
-				// 	state.listedWorkers = state.listedWorkers.concat(action.payload.workersList);
-
-				// 	const workersMap: Record<string, ItemWorker> = {};
-
-				// 	action.payload.workersList.forEach((worker) => {
-				// 		workersMap[worker.id] = worker;
-				// 	});
-				// 	// state.listedWorkers = { ...state.listedWorkers, ...workersMap };
-				// 	state.listedWorkers = { ...state.listedWorkers, ...workersMap };
-
-				// const workersMap: Map<string, ItemWorker> = new Map(state.listedWorkers);
-				// action.payload.workersList.forEach((worker) => {
-				// 	workersMap.set(worker.id, worker);
-				// });
-				// state.listedWorkers = workersMap;
-
 				const workersMap: Map<string, ItemWorker> = new Map(Object.entries(state.listedWorkers));
-				console.log(`workersMap`);
-				console.log(workersMap);
 
 				action.payload.workersList.forEach((worker) => {
 					workersMap.set(worker.id, worker);
 				});
-
 				state.listedWorkers = Object.fromEntries(workersMap);
 			}
 		},
@@ -69,22 +67,57 @@ const mockDataSlice = createSlice({
 			if (!action.payload) {
 				return;
 			}
-			state.selectedCompanies = state.selectedCompanies.filter(
-				(company) => company.id !== action.payload.id
+
+			// delete state.selectedCompanies[action.payload.id];
+
+			state.selectedCompaniesIds = state.selectedCompaniesIds.filter(
+				(companyId) => companyId !== action.payload.id
 			);
 
+			// update workers list
 			if (action.payload.workersList.length) {
-				const idsToRemove = action.payload.workersList.map((worker) => worker.id);
-				// state.listedWorkers = { ...state.listedWorkers };
-				idsToRemove.forEach((id) => {
-					delete state.listedWorkers[id];
+				action.payload.workersList.forEach((worker) => {
+					delete state.listedWorkers[worker.id];
 				});
 			}
+
+			// if it is no selected companies - check out checkboxAll
+			if (state.selectedCompaniesIds.length === 0) {
+				state.isAllCompaniesChecked = false;
+			}
+		},
+		toggleAllWorkersCheck: (state, action: PayloadAction<boolean>) => {
+			state.isAllWorkersChecked = action.payload;
+		},
+		toggleAllCompaniesCheck: (state, action: PayloadAction<boolean>) => {
+			if (action.payload) {
+				state.selectedCompaniesIds = [];
+				state.listedWorkers = {};
+
+				Object.entries(state.listedCompanies).forEach(([companyId, company]) => {
+					state.selectedCompaniesIds.push(companyId);
+
+					if (company.workersList.length > 0) {
+						company.workersList.forEach((worker) => {
+							state.listedWorkers[worker.id] = worker;
+						});
+					}
+				});
+			} else {
+				state.selectedCompaniesIds = [];
+				state.listedWorkers = {};
+			}
+			state.isAllCompaniesChecked = action.payload;
 		}
 		// другие редукторы
 	}
 });
 
-export const { setCompaniesMock, addCompanyItemSelection, deleteCompanyItemSelection } =
-	mockDataSlice.actions;
+export const {
+	setlistedCompanies,
+	addCompanyItemSelection,
+	deleteCompanyItemSelection,
+	toggleAllWorkersCheck,
+	toggleAllCompaniesCheck
+} = mockDataSlice.actions;
 export default mockDataSlice.reducer;

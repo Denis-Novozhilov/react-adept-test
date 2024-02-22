@@ -1,7 +1,7 @@
 import { ItemCompany, ItemWorker } from './components/ItemRow/ItemRow.props';
 import { v4 } from 'uuid';
 
-export const CreateCompaniesMockList = (quantity: number = 3): ItemCompany[] => {
+export const CreatelistedCompaniesList = (quantity: number = 3): ItemCompany[] => {
 	return Array.from({ length: quantity }, () => {
 		const stamp = v4();
 		const workersQuantity = Math.round(Math.random() * 20);
@@ -29,7 +29,7 @@ const CreateWorkersMockList = (quantity: number = 3): ItemWorker[] => {
 	});
 };
 
-// export const COMPANIES_MOCK = CreateCompaniesMockList(Math.round(Math.random() * 20));
+// export const COMPANIES_MOCK = CreatelistedCompaniesList(Math.round(Math.random() * 20));
 
 // export const COMPANIES_MOCK: ItemCompany[] = [
 // 	{
