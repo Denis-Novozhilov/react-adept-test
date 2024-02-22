@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import { useState } from 'react';
+import './App.css';
+import { List } from './components/List/List';
+// import { COMPANIES_MOCK } from './mock';
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
+import { ItemWorker } from './components/ItemRow/ItemRow.props';
+// import { COMPANIES_MOCK, WORKERS_MOCK } from './mock';
 
 function App() {
-  const [count, setCount] = useState(0)
+	const companiesMock = useSelector((state: RootState) => state.mockData.companiesMock);
+	// const listedWorkers = useSelector((state: RootState) => state.mockData.listedWorkers);
+	const listedWorkers = useSelector((state: RootState) => state.mockData.listedWorkers);
+	// const workersArray: ItemWorker[] = Array.from(listedWorkers.values());
+	// const workersArray: any = Array.from(listedWorkers.values());
+	// const workersArray: any = listedWorkers;
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	// const workersArray: ItemWorker[] = Array.from(listedWorkers.values());
+	const workersArray: ItemWorker[] = Object.entries(listedWorkers).map((entry) => entry[1]);
+
+	// console.log(`workersArray`);
+	// console.log(workersArray);
+	// console.log(`Object.entries(workersArray)`);
+	// console.log(Object.entries(workersArray));
+	// console.log(`typeof workersArray`);
+	// console.log(typeof workersArray);
+	// console.log(`companiesMock`);
+	// console.log(companiesMock);
+	// const [count, setCount] = useState(0);
+
+	return (
+		<>
+			<h1 className="header">Список компаний</h1>
+			<div className="app">
+				<div className="table">
+					<div className="table__column">
+						<List items={companiesMock} />
+						{/* <List items={[]} /> */}
+					</div>
+					<div className="table__column">
+						{/* <List items={WORKERS_MOCK} /> */}
+						{workersArray.length > 0 ? (
+							<List items={workersArray} />
+						) : (
+							<p className="table__notification">список сотрудников пуст</p>
+						)}
+						{/* <List items={[]} /> */}
+					</div>
+				</div>
+			</div>
+		</>
+	);
 }
 
-export default App
+export default App;

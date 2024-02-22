@@ -1,0 +1,46 @@
+.list__head {
+	display: flex;
+	flex-direction: row;
+}
+.list__head div {
+	/* min-width: fit-content; */
+	/* height: 38px; */
+	height: var(--item-size);
+	outline-offset: -1px;
+	outline: 1px solid teal;
+	display: flex;
+	/* flex-direction: row; */
+	/* flex-wrap: nowrap; */
+	align-items: center;
+	padding: 10px;
+	justify-content: center;
+}
+.empty {
+	width: var(--item-size);
+	justify-content: center;
+	/* height: 40px; */
+	/* outline-offset: -1px; */
+	/* outline: 1px solid teal; */
+}
+
+.c_name {
+	width: var(--com-name-w);
+	/* display: flex; */
+	/* align-items: center; */
+	/* justify-content: center; */
+}
+.c_quantity {
+	width: var(--com-quantity-w);
+}
+.c_address {
+	width: var(--com-address-w);
+}
+.w_name {
+	width: var(--wrk-name-w);
+}
+.w_surname {
+	width: var(--wrk-surname-w);
+}
+.w_role {
+	width: var(--wrk-role-w);
+}

@@ -1,68 +1,114 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+	color-scheme: light dark;
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	--scroll-size: 8px;
+	--item-size: 68px;
+	--com-name-w: 300px;
+	--com-quantity-w: 200px;
+	--com-address-w: 200px;
+	--wrk-name-w: 200px;
+	--wrk-surname-w: 200px;
+	--wrk-role-w: 200px;
+}
+
+/* Scroll */
+::-webkit-scrollbar-thumb:horizontal {
+	background-color: rgb(4, 106, 106); /* Цвет ползуна горизонтального скролла */
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-track:horizontal {
+	background-color: #c3c3c3; /* Цвет трека горизонтального скролла */
+}
+
+::-webkit-scrollbar {
+	height: var(--scroll-size);
+	width: var(--scroll-size);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgb(4, 106, 106); /* Цвет ползуна вертикального скролла */
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #c3c3c3; /* Цвет трека вертикального скролла */
+}
+
+/* Для Firefox */
+/* body { */
+/* scrollbar-width: thin; */
+/* scrollbar-color: rgb(4, 106, 106) #c3c3c3;  */
+/* } */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+	font-weight: 500;
+	color: #646cff;
+	text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+	color: #535bf2;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+	/* display: flex; */
+	/* place-items: center; */
+	min-width: 320px;
+	min-height: 100vh;
+	width: 100%;
+	/* border: 1px solid lime; */
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+	font-size: 3.2em;
+	line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	padding: 0.6em 1.2em;
+	font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+	background-color: #1a1a1a;
+	cursor: pointer;
+	transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+	border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+	outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+	:root {
+		color: #213547;
+		background-color: #ffffff;
+	}
+	a:hover {
+		color: #747bff;
+	}
+	button {
+		background-color: #f9f9f9;
+	}
 }
