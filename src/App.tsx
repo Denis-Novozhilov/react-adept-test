@@ -5,6 +5,8 @@ import { List } from './components/List/List';
 import { useSelector } from 'react-redux';
 import { ItemCompany, ItemWorker } from './components/ItemRow/ItemRow.props';
 import { RootState } from './store';
+import { CompaniesList } from './components/CompaniesList/CompaniesList';
+import { WorkersList } from './components/WorkersList/WorkersList';
 // import { COMPANIES_MOCK, WORKERS_MOCK } from './mock';
 
 function App() {
@@ -35,14 +37,20 @@ function App() {
 				<div className="table">
 					<div className="table__column">
 						{companiesArray.length > 0 ? (
-							<List items={companiesArray} />
+							<>
+								{/* <List items={companiesArray} /> */}
+								<CompaniesList items={companiesArray} />
+							</>
 						) : (
 							<p className="table__notification">список компаний пуст</p>
 						)}
 					</div>
 					<div className="table__column">
 						{workersArray.length > 0 ? (
-							<List items={workersArray} />
+							<>
+								{/* <List items={workersArray} /> */}
+								<WorkersList items={workersArray} />
+							</>
 						) : (
 							<p className="table__notification">список сотрудников пуст</p>
 						)}

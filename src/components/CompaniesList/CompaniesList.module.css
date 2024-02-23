@@ -23,24 +23,15 @@
 	/* outline: 1px solid teal; */
 }
 
-.c_name {
+.list__name {
 	width: var(--com-name-w);
 	/* display: flex; */
 	/* align-items: center; */
 	/* justify-content: center; */
 }
-.c_quantity {
+.list__quantity {
 	width: var(--com-quantity-w);
 }
-.c_address {
+.list__address {
 	width: var(--com-address-w);
-}
-.w_name {
-	width: var(--wrk-name-w);
-}
-.w_surname {
-	width: var(--wrk-surname-w);
-}
-.w_role {
-	width: var(--wrk-role-w);
 }

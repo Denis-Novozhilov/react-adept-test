@@ -1,0 +1,44 @@
+.item {
+	display: flex;
+	flex-direction: item;
+	/* gap: 10px;/ */
+	/* padding: 0 10px; */
+}
+
+.item div {
+	height: var(--item-size);
+	outline: 1px solid teal;
+	outline-offset: -1px;
+	display: flex;
+	align-items: center;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+.item div:not(:first-child) {
+	padding: 0 10px;
+}
+.checked {
+	/* border: 10px solid red !important; */
+	background-color: rgba(48, 133, 133, 0.264);
+}
+
+.item__checker {
+	width: var(--item-size);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* padding: 0 !important; */
+	/* margin: 0; */
+	/* justify-content: center; */
+}
+
+.item__name {
+	width: var(--com-name-w);
+}
+.item__quantity {
+	width: var(--com-quantity-w);
+	justify-content: center;
+}
+.item__address {
+	width: var(--com-address-w);
+}

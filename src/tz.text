@@ -56,7 +56,16 @@
 [] bookmark -> toggleAllCompaniesCheck in slice is complete. now lets improve and test toggleAllWorkersCheck.
 [] and later - add feature [add] and [del] for companies and workers
 
+[] add types for components like export const CompanyItemRow: React.FC<CompanyItemRowProps> = ({ item }) => {...
+
 [] delete all borders and useless outlines
+
+[] improve css styles for both tables and common for app
+
+[] optimize common css styles
+
+[] delete commom components <List> and <ItemRow> if not using
+[] after that improve type imports
 
 [] fix all linter errors
 

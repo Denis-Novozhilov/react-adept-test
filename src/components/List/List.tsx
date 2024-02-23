@@ -19,7 +19,7 @@ export const List = ({ items }: { items: ItemCompany[] | ItemWorker[] }) => {
 				<>
 					<div className={style.list}>
 						<div className={style.list__head}>
-							<div className={style.empty}>
+							<div className={style.list__checker}>
 								{'companyName' in items[0] ? (
 									<input
 										type="checkbox"
