@@ -60,6 +60,8 @@
 
 [] fix all linter errors
 
+[] research is needed to change data structure from array to map
+
 [] Fix issue addCompanyItemSelection/addWorkerItemSelection running twise during second checking 
 
 [] Все поля таблиц редактируемые кроме счётчика сотрудников в таблице "компании".

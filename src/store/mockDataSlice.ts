@@ -179,12 +179,23 @@ const mockDataSlice = createSlice({
 				state.selectedCompaniesIds = [];
 				state.listedWorkers = {};
 
+				// if isAllWorkersChecked then add all workers to selectedWorkersIds
+				// but at first empty selectedWorkersIds
+				if (state.isAllWorkersChecked) {
+					state.selectedWorkersIds = [];
+				}
+
 				Object.entries(state.listedCompanies).forEach(([companyId, company]) => {
 					state.selectedCompaniesIds.push(companyId);
 
 					if (company.workersList.length > 0) {
 						company.workersList.forEach((worker) => {
 							state.listedWorkers[worker.id] = worker;
+
+							// if isAllWorkersChecked then add all workers to selectedWorkersIds
+							if (state.isAllWorkersChecked) {
+								state.selectedWorkersIds.push(worker.id);
+							}
 						});
 					}
 				});
