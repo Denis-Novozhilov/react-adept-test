@@ -11,9 +11,8 @@ export const List = ({ items }: { items: ItemCompany[] | ItemWorker[] }) => {
 	);
 	const isAllWorkersChecked = useSelector((state: RootState) => state.mockData.isAllWorkersChecked);
 
-	// const [checkedAll, setCheckedAll] = useState(false);
-
 	const dispatch = useDispatch<AppDispatch>();
+
 	return (
 		<>
 			{items.length > 0 ? (
@@ -28,10 +27,11 @@ export const List = ({ items }: { items: ItemCompany[] | ItemWorker[] }) => {
 										id=""
 										checked={isAllCompaniesChecked}
 										onChange={(event) => {
-											// console.log(`event`);
-											// console.log(event);
-											// console.log(event.nativeEvent.target.checked);
-											dispatch(toggleAllCompaniesCheck(event.nativeEvent.target.checked));
+											// dispatch(toggleAllCompaniesCheck(event.nativeEvent.target.checked));
+											const target = event.nativeEvent.target as HTMLInputElement | null;
+											if (target) {
+												dispatch(toggleAllCompaniesCheck(target.checked));
+											}
 										}}
 									/>
 								) : (
@@ -41,10 +41,11 @@ export const List = ({ items }: { items: ItemCompany[] | ItemWorker[] }) => {
 										id=""
 										checked={isAllWorkersChecked}
 										onChange={(event) => {
-											// console.log(`event`);
-											// console.log(event);
-											// console.log(event.nativeEvent.target.checked);
-											dispatch(toggleAllWorkersCheck(event.nativeEvent.target.checked));
+											// dispatch(toggleAllWorkersCheck(event.nativeEvent.target.checked));
+											const target = event.nativeEvent.target as HTMLInputElement | null;
+											if (target) {
+												dispatch(toggleAllWorkersCheck(target.checked));
+											}
 										}}
 									/>
 								)}

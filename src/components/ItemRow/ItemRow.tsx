@@ -1,16 +1,17 @@
+import { useEffect, useState } from 'react';
 import { ItemCompany, ItemWorker } from './ItemRow.props';
 import style from './ItemRow.module.css';
 import cn from 'classnames';
-import { useEffect, useState } from 'react';
 import { AppDispatch, RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-// import { addCompanyItemSelection } from '../../actions';
-import { addCompanyItemSelection, deleteCompanyItemSelection } from '../../store/mockDataSlice';
+import {
+	addCompanyItemSelection,
+	addWorkerItemSelection,
+	deleteCompanyItemSelection,
+	deleteWorkerItemSelection
+} from '../../store/mockDataSlice';
 
 export const ItemRow = ({ item }: { item: ItemCompany | ItemWorker }) => {
-	// const isAllCompaniessChecked = useSelector(
-	// 	(state: RootState) => state.mockData.isAllCompaniessChecked
-	// );
 	const isAllCompaniesChecked = useSelector(
 		(state: RootState) => state.mockData.isAllCompaniesChecked
 	);
@@ -20,27 +21,9 @@ export const ItemRow = ({ item }: { item: ItemCompany | ItemWorker }) => {
 
 	const dispatch = useDispatch<AppDispatch>();
 
-	// useEffect(() => {
-	// 	// Обновляем состояние checked, когда значение isAllWorkersChecked изменилось
-	// 	setChecked(isAllWorkersChecked);
-	// }, [isAllWorkersChecked]);
-
 	useEffect(() => {
 		'companyName' in item ? setChecked(isAllCompaniesChecked) : setChecked(isAllWorkersChecked);
 	}, ['companyName' in item ? isAllCompaniesChecked : isAllWorkersChecked]);
-
-	// const handleCheckboxChange = () => {
-	// 	setChecked((flag) => {
-	// 		dispatch((dispatch) => {
-	// 			if (flag) {
-	// 				dispatch(deleteCompanyItemSelection(item));
-	// 			} else {
-	// 				dispatch(addCompanyItemSelection(item));
-	// 			}
-	// 		});
-	// 		return !flag;
-	// 	});
-	// };
 
 	return (
 		<div className={cn(style.row, { [style.checked]: checked })}>
@@ -57,7 +40,6 @@ export const ItemRow = ({ item }: { item: ItemCompany | ItemWorker }) => {
 									if (flag) {
 										dispatch(deleteCompanyItemSelection(item));
 									} else {
-										console.log(`addCompanyItemSelection`);
 										dispatch(addCompanyItemSelection(item));
 									}
 								});
@@ -72,17 +54,16 @@ export const ItemRow = ({ item }: { item: ItemCompany | ItemWorker }) => {
 						id=""
 						checked={checked}
 						onChange={() => {
-							// setChecked((flag) => {
-							// 	dispatch((dispatch) => {
-							// 		if (flag) {
-							// 			dispatch(deleteCompanyItemSelection(item));
-							// 		} else {
-							// 			console.log(`addCompanyItemSelection`);
-							// 			dispatch(addCompanyItemSelection(item));
-							// 		}
-							// 	});
-							// 	return !flag;
-							// });
+							setChecked((flag) => {
+								dispatch((dispatch) => {
+									if (flag) {
+										dispatch(deleteWorkerItemSelection(item));
+									} else {
+										dispatch(addWorkerItemSelection(item));
+									}
+								});
+								return !flag;
+							});
 						}}
 					/>
 				)}

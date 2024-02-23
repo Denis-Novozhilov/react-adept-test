@@ -58,6 +58,10 @@
 
 [] delete all borders and useless outlines
 
+[] fix all linter errors
+
+[] Fix issue addCompanyItemSelection/addWorkerItemSelection running twise during second checking 
+
 [] Все поля таблиц редактируемые кроме счётчика сотрудников в таблице "компании".
 
 []В обеих таблицах реализовать механизм добавления/удаления компаний/сотрудников по соответствующим кнопкам. 
