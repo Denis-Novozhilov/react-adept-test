@@ -60,6 +60,38 @@
 
 [] delete all borders and useless outlines
 
+[] add quantity for users and companyes (and selected?)
+
+[] improve bookmarks with !!!
+
+[] rename too long naming such as "deleteCompanyItemSelection" to "deleteSelectedCompanyes"
+
+[]  reduce iterative operations 
+    relatedCompany.workersQuantity = Object.keys(relatedCompany.workersList).length;
+    by cashing relatedCompany Ids to cash array and to further update workersQuantity at once mapping cash array
+    and check benchmark and speed
+
+[] improve Object.keys>Object.values logic after removing array
+
+[] improve function addCompanyItemSelection
+			// if (state.selectedCompanies[action.payload.id]) {
+			// 	return;
+			// }
+			if (state.selectedCompaniesIds.includes(action.payload.id)) {
+				return;
+			}
+    and check benchmark and speed
+
+[] improve from array to Object every single array
+
+[] del cn where it is not using
+
+[] improve css button styles
+
+[] improve statements if (state.selectedCompaniesIds.length > 0) {...
+
+[] add pop up to actions via controls buttons "are you shure"?
+
 [] improve css styles for both tables and common for app
 
 [] optimize common css styles

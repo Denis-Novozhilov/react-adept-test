@@ -4,29 +4,35 @@ import { v4 } from 'uuid';
 export const CreatelistedCompaniesList = (quantity: number = 3): ItemCompany[] => {
 	return Array.from({ length: quantity }, () => {
 		const stamp = v4();
-		const workersQuantity = Math.round(Math.random() * 20);
+		const workersQuantity = Math.round(Math.random() * 10);
 		const res = {
 			id: `c${stamp}`,
 			companyName: `companyName_${stamp}`,
 			address: `address_${stamp}`,
 			workersQuantity: workersQuantity,
-			workersList: CreateWorkersMockList(workersQuantity)
+			workersList: CreateWorkersMockList(workersQuantity, `c${stamp}`)
 		};
 		return res;
 	});
 };
 
-const CreateWorkersMockList = (quantity: number = 3): ItemWorker[] => {
-	return Array.from({ length: quantity }, () => {
+const CreateWorkersMockList = (
+	quantity: number = 3,
+	relation = '_empty_relation'
+): Record<string, ItemWorker> => {
+	const res: Record<string, ItemWorker> = {};
+	for (let i = 0; i < quantity; i++) {
 		const stamp = v4();
-		const res = {
-			id: `w${stamp}`,
+		const workerStamp = `w${stamp}`;
+		res[workerStamp] = {
+			id: workerStamp,
 			surname: `surname_${stamp}`,
 			name: `name_${stamp}`,
-			role: `role_${stamp}`
+			role: `role_${stamp}`,
+			employer: relation
 		};
-		return res;
-	});
+	}
+	return res;
 };
 
 // export const COMPANIES_MOCK = CreatelistedCompaniesList(Math.round(Math.random() * 20));

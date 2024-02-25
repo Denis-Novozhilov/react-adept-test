@@ -35,3 +35,10 @@
 .list__address {
 	width: var(--com-address-w);
 }
+.list__notification {
+	width: 250px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

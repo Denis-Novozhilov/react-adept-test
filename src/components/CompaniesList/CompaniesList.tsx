@@ -1,19 +1,32 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
-import { toggleAllCompaniesCheck } from '../../store/mockDataSlice';
+import { deleteSelectedCompaniesItems, toggleAllCompaniesCheck } from '../../store/mockDataSlice';
 import { CompamyItem } from '../CompamyItem/CompamyItem';
 import style from './CompaniesList.module.css';
 import { ItemCompany } from '../CompamyItem/CompamyItem.props';
+import cn from 'classnames';
 
 export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => {
-	const isAllCompaniesChecked = useSelector(
-		(state: RootState) => state.mockData.isAllCompaniesChecked
+	const { isAllCompaniesChecked, selectedCompaniesIds } = useSelector(
+		(state: RootState) => state.mockData
 	);
 
 	const dispatch = useDispatch<AppDispatch>();
 
 	return (
 		<>
+			<div className="list__controls">
+				<button className={cn(style.list__createItem)}>create</button>
+				<button
+					disabled={items.length === 0 || selectedCompaniesIds.length === 0}
+					className={cn(style.list__deleteItem, { [style.disabled]: items.length === 0 })}
+					onClick={() => {
+						dispatch(deleteSelectedCompaniesItems());
+					}}
+				>
+					delete
+				</button>
+			</div>
 			{items.length > 0 ? (
 				<div className={style.list}>
 					<div className={style.list__head}>
@@ -44,7 +57,7 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 					))}
 				</div>
 			) : (
-				<>{null}</>
+				<p className={style.list__notification}>список компаний пуст</p>
 			)}
 		</>
 	);

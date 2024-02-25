@@ -1,12 +1,11 @@
 // import { useState } from 'react';
 import './App.css';
-import { List } from './components/List/List';
 // import { COMPANIES_MOCK } from './mock';
 import { useSelector } from 'react-redux';
-import { ItemCompany, ItemWorker } from './components/ItemRow/ItemRow.props';
-import { RootState } from './store';
 import { CompaniesList } from './components/CompaniesList/CompaniesList';
+import { ItemCompany, ItemWorker } from './components/ItemRow/ItemRow.props';
 import { WorkersList } from './components/WorkersList/WorkersList';
+import { RootState } from './store';
 // import { COMPANIES_MOCK, WORKERS_MOCK } from './mock';
 
 function App() {
@@ -36,24 +35,10 @@ function App() {
 			<div className="app">
 				<div className="table">
 					<div className="table__column">
-						{companiesArray.length > 0 ? (
-							<>
-								{/* <List items={companiesArray} /> */}
-								<CompaniesList items={companiesArray} />
-							</>
-						) : (
-							<p className="table__notification">список компаний пуст</p>
-						)}
+						<CompaniesList items={companiesArray} />
 					</div>
 					<div className="table__column">
-						{workersArray.length > 0 ? (
-							<>
-								{/* <List items={workersArray} /> */}
-								<WorkersList items={workersArray} />
-							</>
-						) : (
-							<p className="table__notification">список сотрудников пуст</p>
-						)}
+						<WorkersList items={workersArray} />
 					</div>
 				</div>
 			</div>
