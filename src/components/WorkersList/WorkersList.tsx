@@ -15,6 +15,7 @@ import { InitialWorkerData, ItemWorker, ItemCompany } from '../../types/types';
 import { Modal } from '../Modal/Modal';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { parseCsv } from '../../helpers/parseCsv';
+import { csvNotificationString } from '../../csv/csvNotificationFormat';
 
 export const WorkersList: React.FC<{ items: ItemWorker[] }> = ({ items }) => {
 	const [modalIsActive, setModalIsActive] = useState(false);
@@ -108,6 +109,7 @@ export const WorkersList: React.FC<{ items: ItemWorker[] }> = ({ items }) => {
 		if (fileInputRef.current) {
 			(fileInputRef.current as HTMLInputElement).value = '';
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [modalIsActive]);
 
 	return (
@@ -287,6 +289,8 @@ export const WorkersList: React.FC<{ items: ItemWorker[] }> = ({ items }) => {
 								}
 							}}
 						/>
+						&nbsp;&nbsp;
+						<span data-tooltip={csvNotificationString}>( подерживаемый формат csv )</span>
 					</label>
 					{Boolean(workersForms) && (
 						<>

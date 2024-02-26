@@ -11,6 +11,7 @@ import { Modal } from '../Modal/Modal';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { parseCsv } from '../../helpers/parseCsv.ts';
 import { InitialWorkerData, ItemCompany } from '../../types/types.ts';
+import { csvNotificationString } from '../../csv/csvNotificationFormat.ts';
 
 export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => {
 	const [modalIsActive, setModalIsActive] = useState(false);
@@ -231,6 +232,8 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 								}
 							}}
 						/>
+						&nbsp;&nbsp;
+						<span data-tooltip={csvNotificationString}>( подерживаемый формат csv )</span>
 					</label>
 					{Boolean(workersForms) && (
 						<>

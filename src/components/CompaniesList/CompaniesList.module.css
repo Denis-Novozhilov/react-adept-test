@@ -3,14 +3,10 @@
 	flex-direction: row;
 }
 .list__head div {
-	/* min-width: fit-content; */
-	/* height: 38px; */
 	height: var(--item-size);
 	outline-offset: -1px;
 	outline: 1px solid teal;
 	display: flex;
-	/* flex-direction: row; */
-	/* flex-wrap: nowrap; */
 	align-items: center;
 	padding: 10px;
 	justify-content: center;
@@ -18,16 +14,10 @@
 .list__checker {
 	width: var(--item-size);
 	justify-content: center;
-	/* height: 40px; */
-	/* outline-offset: -1px; */
-	/* outline: 1px solid teal; */
 }
 
 .list__name {
 	width: var(--com-name-w);
-	/* display: flex; */
-	/* align-items: center; */
-	/* justify-content: center; */
 }
 .list__quantity {
 	width: var(--com-quantity-w);
@@ -55,9 +45,6 @@
 }
 .list__modal label input {
 	padding: 10px;
-	/* display: flex; */
-	/* flex-direction: column; */
-	/* gap: 10px; */
 }
 
 .list__modal .modal__controllers {
@@ -114,4 +101,36 @@ label.modal__checkbox {
 }
 .modal__options option {
 	font-size: 1.2em;
+}
+
+[data-tooltip] {
+	position: relative;
+	cursor: help;
+	text-decoration: underline;
+}
+
+[data-tooltip]::before {
+	content: attr(data-tooltip);
+	position: absolute;
+	width: 320px;
+	display: block;
+	background: rgb(0, 128, 102);
+	padding: 10px;
+	top: -300px;
+	box-shadow: 0px 2px 5px #0000008c;
+	border-radius: 3px;
+	text-align: left;
+	border-radius: 6px;
+	left: 0;
+	z-index: 1;
+	opacity: 0;
+	white-space: pre;
+	pointer-events: none;
+	transform: translateY(20px);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-tooltip]:hover::before {
+	transform: translate(0);
+	opacity: 1;
 }
