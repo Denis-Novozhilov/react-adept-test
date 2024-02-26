@@ -3,8 +3,9 @@ import { AppDispatch, RootState } from '../../store';
 import { deleteSelectedWorkersItems, toggleAllWorkersCheck } from '../../store/mockDataSlice';
 import { WorkerItem } from '../WorkerItem/WorkerItem';
 import style from './WorkersList.module.css';
-import { ItemWorker } from '../WorkerItem/WorkerItem.props';
+// import { ItemWorker } from '../WorkerItem/WorkerItem.props';
 import cn from 'classnames';
+import { ItemWorker } from '../../types/types';
 
 export const WorkersList: React.FC<{ items: ItemWorker[] }> = ({ items }) => {
 	const { isAllWorkersChecked, selectedWorkersIds } = useSelector(

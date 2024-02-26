@@ -3,9 +3,10 @@ import './App.css';
 // import { COMPANIES_MOCK } from './mock';
 import { useSelector } from 'react-redux';
 import { CompaniesList } from './components/CompaniesList/CompaniesList';
-import { ItemCompany, ItemWorker } from './components/ItemRow/ItemRow.props';
+import { ItemCompany, ItemWorker } from './types/types';
 import { WorkersList } from './components/WorkersList/WorkersList';
 import { RootState } from './store';
+import VirtualizedList from './components/VirtualizedList/VirtualizedList';
 // import { COMPANIES_MOCK, WORKERS_MOCK } from './mock';
 
 function App() {
@@ -44,6 +45,11 @@ function App() {
 			</div>
 		</>
 	);
+	// return (
+	// 	<>
+	// 		<VirtualizedList />
+	// 	</>
+	// );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import { ItemCompany, ItemWorker } from './components/ItemRow/ItemRow.props';
+import { ItemCompany, ItemWorker } from './types/types';
 import { v4 } from 'uuid';
 
 export const CreatelistedCompaniesList = (quantity: number = 3): ItemCompany[] => {

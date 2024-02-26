@@ -2,7 +2,8 @@
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CreatelistedCompaniesList } from '../mock';
-import { ItemCompany, ItemWorker } from '../components/ItemRow/ItemRow.props';
+import { InitialWorkerData, ItemCompany, ItemWorker } from '../types/types';
+import { v4 } from 'uuid';
 
 const COMPANIES_MOCK = CreatelistedCompaniesList(Math.round(Math.random() * 20));
 const companiesInitialMap: Map<string, ItemCompany> = new Map();
@@ -206,6 +207,78 @@ const mockDataSlice = createSlice({
 				//reset selectedWorkersIds to empty
 				state.selectedWorkersIds = [];
 			}
+		},
+		createNewCompany: (
+			state,
+			action: PayloadAction<{
+				name: string;
+				quantity: number;
+				address: string;
+				isWorkersDataInputs: boolean;
+				workersData: Record<string, InitialWorkerData>;
+				isWorkersDataCsv: boolean;
+				workersCsvData: InitialWorkerData[];
+			}>
+		) => {
+			const {
+				name,
+				quantity,
+				address,
+				isWorkersDataInputs,
+				workersData,
+				isWorkersDataCsv,
+				workersCsvData
+			} = action.payload;
+
+			// generate company id
+			const companyId = `c${v4()}`;
+
+			const newCompany: ItemCompany = {
+				id: companyId,
+				companyName: name,
+				address: address,
+				workersQuantity: quantity,
+				workersList: {}
+			};
+
+			if (isWorkersDataInputs) {
+				Object.entries(workersData).forEach(([worker_marker, { surname, name, role }]) => {
+					// generate worker id
+					const workerId = `w${v4()}`;
+
+					const newWorker: ItemWorker = {
+						id: workerId,
+						surname,
+						name,
+						role,
+						employer: companyId
+					};
+
+					newCompany.workersList[workerId] = newWorker;
+				});
+			}
+
+			if (isWorkersDataCsv) {
+				workersCsvData.forEach(({ surname, name, role }) => {
+					// generate worker id
+					const workerId = `w${v4()}`;
+
+					const newWorker: ItemWorker = {
+						id: workerId,
+						surname,
+						name,
+						role,
+						employer: companyId
+					};
+
+					newCompany.workersList[workerId] = newWorker;
+				});
+			}
+
+			// update number after all workers lists merges
+			newCompany.workersQuantity = Object.keys(newCompany.workersList).length;
+
+			state.listedCompanies[companyId] = newCompany;
 		}
 	}
 });
@@ -218,6 +291,7 @@ export const {
 	toggleAllWorkersCheck,
 	toggleAllCompaniesCheck,
 	deleteSelectedCompaniesItems,
-	deleteSelectedWorkersItems
+	deleteSelectedWorkersItems,
+	createNewCompany
 } = mockDataSlice.actions;
 export default mockDataSlice.reducer;

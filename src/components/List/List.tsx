@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ItemRow } from '../ItemRow/ItemRow';
-import { ItemCompany, ItemWorker } from '../ItemRow/ItemRow.props';
+import { ItemCompany, ItemWorker } from '../../types/types';
 import style from './List.module.css';
 import { AppDispatch, RootState } from '../../store';
 import { toggleAllCompaniesCheck, toggleAllWorkersCheck } from '../../store/mockDataSlice';

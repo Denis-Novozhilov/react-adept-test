@@ -48,23 +48,35 @@
 Дизайн приложения  на ваш вкус. Выполнение всех пунктов не является обязательным, 
 но желательным. Чем точнее будет выполнено тестовое задание, 
 тем у вас больше шансов получить положительный ответ.
-
+[] improve all ts errors
+[] delete wrong type 
+        export interface ItemWorker {
+            id: string;
+            surname: string;
+            name: string;
+            role: string;
+        }
 
 ![] разделить логику компонентов ItemRow 
 ![] разделить логику компонентов List
-
+[]
 [] bookmark -> toggleAllCompaniesCheck in slice is complete. now lets improve and test toggleAllWorkersCheck.
 [] and later - add feature [add] and [del] for companies and workers
-
+хъ
 [] add types for components like export const CompanyItemRow: React.FC<CompanyItemRowProps> = ({ item }) => {...
 
 [] delete all borders and useless outlines
-
+х
 [] add quantity for users and companyes (and selected?)
 
 [] improve bookmarks with !!!
+хъ
 
 [] rename too long naming such as "deleteCompanyItemSelection" to "deleteSelectedCompanyes"
+хъ
+
+
+ []
 
 []  reduce iterative operations 
     relatedCompany.workersQuantity = Object.keys(relatedCompany.workersList).length;
@@ -72,6 +84,14 @@
     and check benchmark and speed
 
 [] improve Object.keys>Object.values logic after removing array
+
+[] add middle function wrapper "getUserApprove" to delete functions
+
+[] remove types to separate file if it is necessary
+
+[] check all css files and clear all comments
+
+[] remove cn library from project if it will not be used (or if it is possible to delete)
 
 [] improve function addCompanyItemSelection
 			// if (state.selectedCompanies[action.payload.id]) {

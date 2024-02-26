@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ItemCompany, ItemWorker } from './ItemRow.props';
+import { ItemCompany, ItemWorker } from '../../types/types';
 import style from './ItemRow.module.css';
 import cn from 'classnames';
 import { AppDispatch, RootState } from '../../store';

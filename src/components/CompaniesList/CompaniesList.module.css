@@ -42,3 +42,47 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.list__modal {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.list__modal label {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.list__modal label input {
+	padding: 10px;
+	/* display: flex; */
+	/* flex-direction: column; */
+	/* gap: 10px; */
+}
+
+.list__modal .modal__controllers {
+	margin-top: 14px;
+}
+
+.modal__optional {
+	border: 1px solid teal;
+	border-radius: 10px;
+	padding: 10px;
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+.modal__sub_group {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.modal__sub_group label {
+	flex-grow: 1;
+}
+
+input[type='file'] {
+	padding: 10px;
+	border: 1px solid teal;
+}
