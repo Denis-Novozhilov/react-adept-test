@@ -1,11 +1,9 @@
-import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { addWorkerItemSelection, deleteWorkerItemSelection } from '../../store/mockDataSlice';
 import style from './WorkerItem.module.css';
 import { ItemWorker } from '../../types/types';
-// import { ItemWorker } from './WorkerItem.props';
 
 export const WorkerItem: React.FC<{ item: ItemWorker }> = ({ item }) => {
 	const isAllWorkersChecked = useSelector((state: RootState) => state.mockData.isAllWorkersChecked);
@@ -19,7 +17,7 @@ export const WorkerItem: React.FC<{ item: ItemWorker }> = ({ item }) => {
 	}, [isAllWorkersChecked]);
 
 	return (
-		<div className={cn(style.item, { [style.checked]: checked })}>
+		<div className={`${style.item} ${checked ? style.checked : ''}`}>
 			<div className={style.item__checker}>
 				<input
 					type="checkbox"

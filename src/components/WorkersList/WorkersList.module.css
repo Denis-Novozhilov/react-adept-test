@@ -3,14 +3,10 @@
 	flex-direction: row;
 }
 .list__head div {
-	/* min-width: fit-content; */
-	/* height: 38px; */
 	height: var(--item-size);
 	outline-offset: -1px;
 	outline: 1px solid teal;
 	display: flex;
-	/* flex-direction: row; */
-	/* flex-wrap: nowrap; */
 	align-items: center;
 	padding: 10px;
 	justify-content: center;
@@ -18,9 +14,6 @@
 .list__checker {
 	width: var(--item-size);
 	justify-content: center;
-	/* height: 40px; */
-	/* outline-offset: -1px; */
-	/* outline: 1px solid teal; */
 }
 
 .list__name {
@@ -38,4 +31,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+.list__controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: 20px;
+	padding: 10px;
 }

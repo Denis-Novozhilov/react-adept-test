@@ -3,7 +3,6 @@ export interface ItemCompany {
 	companyName: string;
 	address: string;
 	workersQuantity: number;
-	// workersList: ItemWorker[];
 	workersList: Record<string, ItemWorker>;
 }
 export interface ItemWorker {

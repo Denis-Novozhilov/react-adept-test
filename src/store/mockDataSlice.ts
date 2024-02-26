@@ -3,7 +3,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CreatelistedCompaniesList } from '../mock';
 import { InitialWorkerData, ItemCompany, ItemWorker } from '../types/types';
-import { v4 } from 'uuid';
+import { uuid } from '../helpers/customUuid';
 
 const COMPANIES_MOCK = CreatelistedCompaniesList(Math.round(Math.random() * 20));
 const companiesInitialMap: Map<string, ItemCompany> = new Map();
@@ -15,20 +15,16 @@ interface MockDataState {
 	isAllCompaniesChecked: boolean;
 	isAllWorkersChecked: boolean;
 	listedCompanies: Record<string, ItemCompany>;
-	// selectedCompanies: Record<string, ItemCompany>;
 	selectedCompaniesIds: string[];
 	listedWorkers: Record<string, ItemWorker>;
 	selectedWorkersIds: string[];
-
-	// <workerID, employer>
-	// selectedWorkersIds: Record<string, string>;
 }
 
 const initialState: MockDataState = {
 	isAllCompaniesChecked: false,
 	isAllWorkersChecked: false,
 
-	listedCompanies: Object.fromEntries(companiesInitialMap), // ваш начальный стейт для компаний
+	listedCompanies: Object.fromEntries(companiesInitialMap),
 	selectedCompaniesIds: [],
 
 	listedWorkers: {},
@@ -43,22 +39,16 @@ const mockDataSlice = createSlice({
 			if (!action.payload) {
 				return;
 			}
-			// if (state.selectedCompanies[action.payload.id]) {
-			// 	return;
-			// }
+
 			if (state.selectedCompaniesIds.includes(action.payload.id)) {
 				return;
 			}
-
-			// state.selectedCompanies[action.payload.id] = action.payload;
 
 			state.selectedCompaniesIds.push(action.payload.id);
 
 			// update workers list
 			if (Object.keys(action.payload.workersList).length) {
 				const workersMap: Map<string, ItemWorker> = new Map(Object.entries(state.listedWorkers));
-
-				// !!! Improve logic↓
 
 				Object.values(action.payload.workersList).forEach((worker) => {
 					workersMap.set(worker.id, worker);
@@ -77,14 +67,9 @@ const mockDataSlice = createSlice({
 			if (!action.payload) {
 				return;
 			}
-			// if (state.selectedCompanies[action.payload.id]) {
-			// 	return;
-			// }
 			if (state.selectedWorkersIds.includes(action.payload.id)) {
 				return;
 			}
-
-			// state.selectedCompanies[action.payload.id] = action.payload;
 
 			state.selectedWorkersIds.push(action.payload.id);
 		},
@@ -93,7 +78,6 @@ const mockDataSlice = createSlice({
 				return;
 			}
 
-			// delete state.selectedCompanies[action.payload.id];
 			state.selectedCompaniesIds = state.selectedCompaniesIds.filter(
 				(companyId) => companyId !== action.payload.id
 			);
@@ -231,7 +215,7 @@ const mockDataSlice = createSlice({
 			} = action.payload;
 
 			// generate company id
-			const companyId = `c${v4()}`;
+			const companyId = `c${uuid()}`;
 
 			const newCompany: ItemCompany = {
 				id: companyId,
@@ -242,9 +226,10 @@ const mockDataSlice = createSlice({
 			};
 
 			if (isWorkersDataInputs) {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				Object.entries(workersData).forEach(([worker_marker, { surname, name, role }]) => {
 					// generate worker id
-					const workerId = `w${v4()}`;
+					const workerId = `w${uuid()}`;
 
 					const newWorker: ItemWorker = {
 						id: workerId,
@@ -261,7 +246,7 @@ const mockDataSlice = createSlice({
 			if (isWorkersDataCsv) {
 				workersCsvData.forEach(({ surname, name, role }) => {
 					// generate worker id
-					const workerId = `w${v4()}`;
+					const workerId = `w${uuid()}`;
 
 					const newWorker: ItemWorker = {
 						id: workerId,
@@ -286,12 +271,16 @@ const mockDataSlice = createSlice({
 export const {
 	addCompanyItemSelection,
 	addWorkerItemSelection,
+
 	deleteCompanyItemSelection,
 	deleteWorkerItemSelection,
+
 	toggleAllWorkersCheck,
 	toggleAllCompaniesCheck,
+
 	deleteSelectedCompaniesItems,
 	deleteSelectedWorkersItems,
+
 	createNewCompany
 } = mockDataSlice.actions;
 export default mockDataSlice.reducer;

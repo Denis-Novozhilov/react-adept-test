@@ -7,13 +7,13 @@ import {
 } from '../../store/mockDataSlice';
 import { CompamyItem } from '../CompamyItem/CompamyItem';
 import style from './CompaniesList.module.css';
-import { ItemCompany } from '../CompamyItem/CompamyItem.props';
-import cn from 'classnames';
 import { Modal } from '../Modal/Modal';
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { parseCsv } from '../../helpers/parseCsv.ts';
+import { InitialWorkerData, ItemCompany } from '../../types/types.ts';
 
 export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => {
-	const [modalIsActive, setModalIsActive] = useState(true);
+	const [modalIsActive, setModalIsActive] = useState(false);
 	const [workersForms, setWorkersForms] = useState(0);
 	const [workersCsvForm, setWorkersCsvForm] = useState(false);
 	const initialFormState = {
@@ -21,85 +21,57 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 		companyWorkersQuantity: '',
 		companyAddress: '',
 		isWorkersDataInputs: false,
-		companyWorkersDataInputs: {},
+		companyWorkersDataInputs: {} as Record<string, InitialWorkerData>,
 		isWorkersDataCsv: false,
-		companyWorkersDataCsv: []
+		companyWorkersDataCsv: [] as InitialWorkerData[]
 	};
-	const [formState, setFormState] = useState(initialFormState);
 
-	const [csvData, setCsvData] = useState([]);
+	const [csvData, setCsvData] = useState<InitialWorkerData[]>([]);
+	const [formState, setFormState] = useState<typeof initialFormState>(initialFormState);
 
-	const handleFileChange = (e) => {
-		const file = e.target.files[0];
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
 
 		if (file) {
 			const reader = new FileReader();
 
 			reader.onload = (event) => {
-				const csvString = event.target.result;
-				const parsedData = parseCsv(csvString);
+				const csvString = event.target?.result as string | undefined;
 
-				setCsvData(parsedData);
+				if (csvString !== undefined) {
+					const parsedData: { [key: string]: string }[] = parseCsv(csvString);
 
-				console.log(`parsedData`);
-				console.log(parsedData);
-				/*
-						[
-							{	"surname": "Иванов",		"name": "Петр",			"role": "Инженер"	},
-							{	"surname": "Васильев",		"name": "Николай",		"role": "Архитектор"	},
-							{	"surname": "Павловский",	"name": "Сергей",		"role": "Конструктор инженер"	},
-							{	"surname": "Илларионова",	"name": "Наталья",		"role": "Главный бухгалтер"	},
-							{	"surname": "Поваров",		"name": "Константин",	"role": "Секретарь"	},
-							{	"surname": "Игнатьев",		"name": "Алексей",		"role": "Прораб"	},
-							{	"surname": "Богомолов",		"name": "Илья",			"role": "Архитектор"	},
-							{	"surname": "Васильева",		"name": "Татьяна",		"role": "Бухгалтер"	},
-							{	"surname": "Каренин",		"name": "Виктор",		"role": "Инженер"	},
-							{	"surname": "Порамонов",		"name": "Алексей",		"role": "Бульдозерист"	},
-							{	"surname": "Кривошеев",		"name": "Василий",		"role": "Программист"	}
-						]
-				*/
+					const transformedData: InitialWorkerData[] = parsedData.map((item) => ({
+						surname: item.surname || '',
+						name: item.name || '',
+						role: item.role || ''
+					}));
 
-				setFormState({
-					...formState,
-					companyWorkersDataCsv: [...formState.companyWorkersDataCsv, ...parsedData]
-				});
+					setCsvData(transformedData);
+
+					setFormState({
+						...formState,
+						companyWorkersDataCsv: [...formState.companyWorkersDataCsv, ...transformedData]
+					});
+				}
 			};
 
 			reader.readAsText(file);
 		}
 	};
 
-	const parseCsv = (csvString) => {
-		const rows = csvString.split('\n');
-		const header = rows[0].split(',');
-		const data = rows.slice(1).map((rowString) => {
-			const values = rowString.split(',');
-			return header.reduce((obj, header, index) => {
-				obj[header] = values[index];
-				return obj;
-			}, {});
-		});
+	const formRef = useRef<HTMLFormElement | null>(null);
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-		return data;
-	};
-
-	const formRef = useRef(null);
-	const fileInputRef = useRef(null);
-
-	const onFormChange = (e) => {
-		const { target } = e;
-		console.log({ target });
-		// target.dataset.worker;
+	const onFormChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.name.includes('_workersDataInput_')) {
-			console.log(`e.target.name.includes('_workersDataInput_'`);
-			console.log({ target });
 			setFormState({
 				...formState,
 				companyWorkersDataInputs: {
 					...formState.companyWorkersDataInputs,
-					[e.target.dataset.worker]: {
-						...formState.companyWorkersDataInputs[e.target.dataset.worker],
-						[e.target.dataset.key]: e.target.value
+					[e.target.dataset.worker as string]: {
+						...formState.companyWorkersDataInputs[e.target.dataset.worker as string],
+						[e.target.dataset.key as string]: e.target.value
 					}
 				}
 			});
@@ -125,19 +97,24 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 		setCsvData([]);
 		setWorkersCsvForm(false);
 		if (fileInputRef.current) {
-			fileInputRef.current.value = '';
+			(fileInputRef.current as HTMLInputElement).value = '';
 		}
 	}, [modalIsActive]);
 
 	return (
 		<>
-			<div className="list__controls">
-				<button className={cn(style.list__createItem)} onClick={() => setModalIsActive(true)}>
+			<div className={style.list__controls}>
+				<button
+					className={style.list__createItem}
+					onClick={() => {
+						setModalIsActive(true);
+					}}
+				>
 					create
 				</button>
 				<button
 					disabled={items.length === 0 || selectedCompaniesIds.length === 0}
-					className={cn(style.list__deleteItem, { [style.disabled]: items.length === 0 })}
+					className={`${style.list__deleteItem} ${items.length === 0 ? style.disabled : ''}`}
 					onClick={() => {
 						dispatch(deleteSelectedCompaniesItems());
 					}}
@@ -178,7 +155,7 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 				<p className={style.list__notification}>список компаний пуст</p>
 			)}
 			<Modal isActive={modalIsActive} setActive={setModalIsActive}>
-				<h2>Создать новую компанию</h2>
+				<h2 className={style.modal__header}>Создать новую компанию</h2>
 				<form className={style.list__modal} ref={formRef} action="#">
 					<label htmlFor="companyName">
 						Название компании
@@ -188,6 +165,17 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 							id="companyName"
 							onChange={onFormChange}
 							value={formState.companyName}
+							required
+						/>
+					</label>
+					<label htmlFor="companyAddress">
+						Адрес компании
+						<input
+							type="text"
+							name="companyAddress"
+							id="companyAddress"
+							value={formState.companyAddress}
+							onChange={onFormChange}
 							required
 						/>
 					</label>
@@ -203,13 +191,13 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 							onChange={(e) => {
 								onFormChange(e);
 								if (formState.isWorkersDataInputs) {
-									setWorkersForms(e.target.value);
+									setWorkersForms(parseInt(e.target.value, 10));
 								}
 							}}
 						/>
 					</label>
-					<label htmlFor="isWorkersDataInputs">
-						Ввести данные сотрудников
+					<label className={style.modal__checkbox} htmlFor="isWorkersDataInputs">
+						<p>Ввести данные сотрудников</p>
 						<input
 							type="checkbox"
 							name="isWorkersDataInputs"
@@ -218,12 +206,14 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 							checked={!!formState.isWorkersDataInputs}
 							onChange={(e) => {
 								onFormChange(e);
-								setWorkersForms(e.target.checked ? formState.companyWorkersQuantity : 0);
+								setWorkersForms(
+									e.target.checked ? parseInt(formState.companyWorkersQuantity, 10) : 0
+								);
 							}}
 						/>
 					</label>
-					<label htmlFor="companyIsWorkersCsvData">
-						Загрузить данные сотрудников CSV
+					<label className={style.modal__checkbox} htmlFor="companyIsWorkersCsvData">
+						<p>Загрузить данные сотрудников CSV</p>
 						<input
 							type="checkbox"
 							name="isWorkersDataCsv"
@@ -238,7 +228,6 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 									setWorkersCsvForm(false);
 									setCsvData([]);
 								}
-								// setWorkersForms(e.target.checked ? formState.companyWorkersQuantity : 0);
 							}}
 						/>
 					</label>
@@ -259,7 +248,6 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 														name={i + '_workersDataInput_Surname'}
 														data-worker={i + '_worker'}
 														data-key={'surname'}
-														// value={row.surname}
 														onChange={onFormChange}
 													/>
 												</label>
@@ -272,7 +260,6 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 														name={i + '_workersDataInput_Name'}
 														data-worker={i + '_worker'}
 														data-key={'name'}
-														// value={row.name}
 														onChange={onFormChange}
 													/>
 												</label>
@@ -352,29 +339,12 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 							)}
 						</>
 					)}
-					<label htmlFor="companyAddress">
-						Адрес компании
-						<input
-							type="text"
-							name="companyAddress"
-							id="companyAddress"
-							value={formState.companyAddress}
-							onChange={onFormChange}
-							required
-						/>
-					</label>
+
 					<div className={style.modal__controllers}>
 						<button
 							onClick={(e) => {
-								console.log(`formState`);
-								console.log(`formState`);
-								console.log(`formState`);
-								console.log(formState);
-								console.log(`formState`);
-								console.log(`formState`);
-								console.log(`formState`);
 								e.preventDefault();
-								if (formRef.current.checkValidity()) {
+								if (formRef.current && formRef.current.checkValidity()) {
 									dispatch(
 										createNewCompany({
 											name: formState.companyName,
@@ -386,24 +356,12 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 											workersCsvData: formState.companyWorkersDataCsv
 										})
 									);
+									dispatch(toggleAllCompaniesCheck(false));
 									setModalIsActive(false);
 								} else {
-									formRef.current.reportValidity();
+									formRef.current && formRef.current.reportValidity();
 									return;
 								}
-
-								/*
-									{
-										"companyName": "ййй",
-										"companyWorkersQuantity": "2",
-										"companyIsWorkersData": true,
-										"companyWorkersDataInputs": {
-											"0_worker": { "surname": "11", "name": "11", "role": "11" },
-											"1_worker": { "surname": "22", "name": "22", "role": "22" }
-										},
-										"companyAddress": "33ааыуау"
-									}
-								*/
 							}}
 						>
 							Создать

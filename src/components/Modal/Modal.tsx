@@ -1,28 +1,28 @@
-import React from 'react';
+import { ReactNode, MouseEvent, FC, Dispatch, SetStateAction } from 'react';
 import style from './Modal.module.css';
-import cn from 'classnames';
 
-export const Modal = ({ isActive, setActive, children }) => {
+interface ModalProps {
+	isActive: boolean;
+	setActive: Dispatch<SetStateAction<boolean>>;
+	children: ReactNode;
+}
+
+export const Modal: FC<ModalProps> = ({ isActive, setActive, children }) => {
 	return (
 		<>
-			{/* <div className={isActive ? style.modal_active : style.modal} onClick={() => setActive(false)}> */}
 			<div
-				className={cn(style.modal, { [style.active]: isActive })}
+				className={`${style.modal} ${isActive ? style.active : ''}`}
 				onClick={() => setActive(false)}
 			>
-				{/* <div
-					className={isActive ? style.modal__content_active : style.modal__content}
-					onClick={(e) => {
-						e.stopPropagation();
-					}}
-				> */}
 				<div
-					className={cn(style.modal__content, { [style.active]: isActive })}
-					onClick={(e) => {
+					className={`${style.modal__content} ${isActive ? style.active : ''}`}
+					onClick={(e: MouseEvent<HTMLDivElement>) => {
 						e.stopPropagation();
 					}}
 				>
-					<button onClick={() => setActive(false)}>X</button>
+					<button className={style.modal__close} onClick={() => setActive(false)}>
+						X
+					</button>
 					{children}
 				</div>
 			</div>

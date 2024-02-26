@@ -1,26 +1,22 @@
-import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { addCompanyItemSelection, deleteCompanyItemSelection } from '../../store/mockDataSlice';
 import style from './CompamyItem.module.css';
-import { ItemCompany } from './CompamyItem.props';
+import { ItemCompany } from '../../types/types';
 
 export const CompamyItem: React.FC<{ item: ItemCompany }> = ({ item }) => {
 	const isAllCompaniesChecked = useSelector(
 		(state: RootState) => state.mockData.isAllCompaniesChecked
 	);
-
 	const [checked, setChecked] = useState(false);
-
 	const dispatch = useDispatch<AppDispatch>();
-
 	useEffect(() => {
 		setChecked(isAllCompaniesChecked);
 	}, [isAllCompaniesChecked]);
 
 	return (
-		<div className={cn(style.item, { [style.checked]: checked })}>
+		<div className={`${style.item} ${checked ? style.checked : ''}`}>
 			<div className={style.item__checker}>
 				<input
 					type="checkbox"

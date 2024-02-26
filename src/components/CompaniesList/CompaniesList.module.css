@@ -86,3 +86,23 @@ input[type='file'] {
 	padding: 10px;
 	border: 1px solid teal;
 }
+
+.modal__checkbox input {
+	width: 19px;
+	height: 19px;
+}
+label.modal__checkbox {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	flex-direction: row;
+}
+.list__controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: 20px;
+	padding: 10px;
+}
+.modal__header {
+	margin-bottom: 14px;
+}

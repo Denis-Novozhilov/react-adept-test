@@ -1,75 +1,26 @@
 #root {
 	padding: 0 20px;
 	width: 100%;
-	/* display: flex; */
-	/* flex-direction: column; */
-	/* justify-content: flex-start; */
-	/* align-items: flex-start; */
 }
-
-/* .logo {
-	height: 6em;
-	padding: 1.5em;
-	will-change: filter;
-	transition: filter 300ms;
-} */
-/* .logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-	filter: drop-shadow(0 0 2em #61dafbaa);
-} */
-
-/* @keyframes logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-} */
-
-/* @media (prefers-reduced-motion: no-preference) {
-	a:nth-of-type(2) .logo {
-		animation: logo-spin infinite 20s linear;
-	}
-} */
-
-/* .card {
-	padding: 2em;
-} */
-/* 
-.read-the-docs {
-	color: #888;
-} */
 
 .app {
-	/* display: flex; */
-	/* justify-content: row; */
 	display: flex;
-	flex-direction: column;
-	/* align-items: center; */
+	flex-direction: row;
+	justify-content: start;
 	flex-wrap: wrap;
-	/* padding: 0 10px; */
 	width: 100%;
-	outline: 1px solid pink;
 	overflow: hidden;
 	overflow-x: auto;
 }
 
 .header {
-	margin: 20px;
-	font-size: 32px;
+	margin: 40px 35px;
+	font-size: 28px;
 }
 
 .table {
-	outline: 1px solid red;
 	display: flex;
-	/* flex-wrap: wrap; */
-	/* justify-content: row; */
+	flex-direction: column;
 	gap: 14px;
 	padding: 14px;
-}
-.table__column {
-	outline: 1px solid green;
 }

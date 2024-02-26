@@ -20,38 +20,23 @@
 }
 
 .modal__content {
-	/* opacity: 0.7; */
 	padding: 20px;
 	border-radius: 20px;
-	background-color: rgba(0, 128, 128, 0.5);
-	/* background-color: #ffffff79; */
-	/* width: 500px; */
-	/* width: 80vw; */
+	background-color: rgba(24, 83, 70, 0.85);
 	min-width: 100px;
 	min-height: 40px;
-	/* height: 100px; */
 	transform: scale(0);
 	transition: all 0.35s;
-	/* display: none; */
 	visibility: hidden;
-
-	/* display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: start; */
 	overflow-y: auto;
+	position: relative;
 }
-
-/* .modal__content label {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 10px;
-} */
-
+.modal__content .modal__close {
+	position: absolute;
+	right: 20px;
+}
 .active {
 	pointer-events: all;
-	/* display: block; */
 	visibility: visible;
 	opacity: 1;
 	transform: scale(1);
