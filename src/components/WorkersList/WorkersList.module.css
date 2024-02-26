@@ -1,4 +1,4 @@
-.list__head {
+/* .list__head {
 	display: flex;
 	flex-direction: row;
 }
@@ -16,15 +16,7 @@
 	justify-content: center;
 }
 
-.list__name {
-	width: var(--wrk-name-w);
-}
-.list__surname {
-	width: var(--wrk-surname-w);
-}
-.list__role {
-	width: var(--wrk-role-w);
-}
+
 .list__notification {
 	width: 250px;
 	height: 100px;
@@ -37,4 +29,144 @@
 	justify-content: flex-end;
 	gap: 20px;
 	padding: 10px;
+}
+.modal__header {
+	margin-bottom: 14px;
+}
+
+.modal__options {
+	padding: 15px;
+	border-radius: 8px;
+	font-size: 1.2em;
+}
+.modal__options option {
+	font-size: 1.2em;
+} */
+
+.list__head {
+	display: flex;
+	flex-direction: row;
+}
+.list__head div {
+	/* min-width: fit-content; */
+	/* height: 38px; */
+	height: var(--item-size);
+	outline-offset: -1px;
+	outline: 1px solid teal;
+	display: flex;
+	/* flex-direction: row; */
+	/* flex-wrap: nowrap; */
+	align-items: center;
+	padding: 10px;
+	justify-content: center;
+}
+.list__checker {
+	width: var(--item-size);
+	justify-content: center;
+	/* height: 40px; */
+	/* outline-offset: -1px; */
+	/* outline: 1px solid teal; */
+}
+
+.list__name {
+	width: var(--com-name-w);
+	/* display: flex; */
+	/* align-items: center; */
+	/* justify-content: center; */
+}
+.list__quantity {
+	width: var(--com-quantity-w);
+}
+.list__address {
+	width: var(--com-address-w);
+}
+.list__notification {
+	width: 250px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.list__modal {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.list__modal label {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.list__modal label input {
+	padding: 10px;
+	/* display: flex; */
+	/* flex-direction: column; */
+	/* gap: 10px; */
+}
+
+.list__modal .modal__controllers {
+	margin-top: 14px;
+}
+
+.modal__optional {
+	border: 1px solid teal;
+	border-radius: 10px;
+	padding: 10px;
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+.modal__sub_group {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.modal__sub_group label {
+	flex-grow: 1;
+}
+
+input[type='file'] {
+	padding: 10px;
+	border: 1px solid teal;
+}
+
+.modal__checkbox input {
+	width: 19px;
+	height: 19px;
+}
+label.modal__checkbox {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	flex-direction: row;
+}
+.list__controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: 20px;
+	padding: 10px;
+}
+.modal__header {
+	margin-bottom: 14px;
+}
+
+.modal__options {
+	padding: 15px;
+	border-radius: 8px;
+	font-size: 1.2em;
+}
+.modal__options option {
+	font-size: 1.2em;
+}
+
+.list__name {
+	width: var(--wrk-name-w);
+}
+.list__surname {
+	width: var(--wrk-surname-w);
+}
+.list__role {
+	width: var(--wrk-role-w);
 }

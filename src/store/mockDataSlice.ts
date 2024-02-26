@@ -264,6 +264,81 @@ const mockDataSlice = createSlice({
 			newCompany.workersQuantity = Object.keys(newCompany.workersList).length;
 
 			state.listedCompanies[companyId] = newCompany;
+		},
+		injectWorkersToExistedCompany: (
+			state,
+			action: PayloadAction<{
+				employerCompanyId: string;
+				isWorkersDataInputs: boolean;
+				workersData: Record<string, InitialWorkerData>;
+				isWorkersDataCsv: boolean;
+				workersCsvData: InitialWorkerData[];
+			}>
+		) => {
+			const {
+				employerCompanyId,
+				isWorkersDataInputs,
+				workersData,
+				isWorkersDataCsv,
+				workersCsvData
+			} = action.payload;
+
+			const injectionWithWorkers = {
+				workersList: {} as Record<string, ItemWorker>
+			};
+
+			if (isWorkersDataInputs) {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				Object.entries(workersData).forEach(([worker_marker, { surname, name, role }]) => {
+					// generate worker id
+					const workerId = `w${uuid()}`;
+
+					const newWorker: ItemWorker = {
+						id: workerId,
+						surname,
+						name,
+						role,
+						employer: employerCompanyId
+					};
+
+					injectionWithWorkers.workersList[workerId] = newWorker;
+				});
+			}
+
+			if (isWorkersDataCsv) {
+				workersCsvData.forEach(({ surname, name, role }) => {
+					// generate worker id
+					const workerId = `w${uuid()}`;
+
+					const newWorker: ItemWorker = {
+						id: workerId,
+						surname,
+						name,
+						role,
+						employer: employerCompanyId
+					};
+
+					injectionWithWorkers.workersList[workerId] = newWorker;
+				});
+
+				//determine existed company to workers injection
+				const companyToInjection = state.listedCompanies[employerCompanyId];
+				// merge existed company workersList with injection
+				companyToInjection.workersList = Object.assign(
+					{},
+					companyToInjection.workersList,
+					injectionWithWorkers.workersList
+				);
+
+				// update workers quantity
+				companyToInjection.workersQuantity = Object.keys(companyToInjection.workersList).length;
+			}
+		},
+		deselectAllCompanyItems: (store) => {
+			store.selectedCompaniesIds = [];
+		},
+		deselectAllWorkersItems: (store) => {
+			store.selectedWorkersIds = [];
 		}
 	}
 });
@@ -281,6 +356,10 @@ export const {
 	deleteSelectedCompaniesItems,
 	deleteSelectedWorkersItems,
 
-	createNewCompany
+	createNewCompany,
+	injectWorkersToExistedCompany,
+
+	deselectAllCompanyItems,
+	deselectAllWorkersItems
 } = mockDataSlice.actions;
 export default mockDataSlice.reducer;

@@ -24,12 +24,12 @@
 
 /* Scroll */
 ::-webkit-scrollbar-thumb:horizontal {
-	background-color: rgb(4, 106, 106); /* Цвет ползуна горизонтального скролла */
+	background-color: rgb(4, 106, 106);
 	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-track:horizontal {
-	background-color: #c3c3c3; /* Цвет трека горизонтального скролла */
+	background-color: #c3c3c3;
 }
 
 ::-webkit-scrollbar {
@@ -38,19 +38,13 @@
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: rgb(4, 106, 106); /* Цвет ползуна вертикального скролла */
+	background-color: rgb(4, 106, 106);
 	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-track {
-	background-color: #c3c3c3; /* Цвет трека вертикального скролла */
+	background-color: #c3c3c3;
 }
-
-/* Для Firefox */
-/* body { */
-/* scrollbar-width: thin; */
-/* scrollbar-color: rgb(4, 106, 106) #c3c3c3;  */
-/* } */
 
 * {
 	margin: 0;
@@ -68,12 +62,9 @@ a:hover {
 }
 
 body {
-	/* display: flex; */
-	/* place-items: center; */
 	min-width: 320px;
 	min-height: 100vh;
 	width: 100%;
-	/* border: 1px solid lime; */
 }
 
 h1 {

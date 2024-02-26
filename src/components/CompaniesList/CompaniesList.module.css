@@ -106,3 +106,12 @@ label.modal__checkbox {
 .modal__header {
 	margin-bottom: 14px;
 }
+
+.modal__options {
+	padding: 15px;
+	border-radius: 8px;
+	font-size: 1.2em;
+}
+.modal__options option {
+	font-size: 1.2em;
+}

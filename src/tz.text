@@ -75,8 +75,11 @@
 [] rename too long naming such as "deleteCompanyItemSelection" to "deleteSelectedCompanyes"
 хъ
 
+[] add new workers split for 2 ways
+    1) if it is new company - dispatch new compamy?
+    2) if it is injected in current existed company - create new reducer
 
- []
+[]
 
 []  reduce iterative operations 
     relatedCompany.workersQuantity = Object.keys(relatedCompany.workersList).length;

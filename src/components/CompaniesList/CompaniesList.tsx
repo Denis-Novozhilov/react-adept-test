@@ -117,6 +117,7 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 					className={`${style.list__deleteItem} ${items.length === 0 ? style.disabled : ''}`}
 					onClick={() => {
 						dispatch(deleteSelectedCompaniesItems());
+						dispatch(toggleAllCompaniesCheck(false));
 					}}
 				>
 					delete
@@ -197,7 +198,7 @@ export const CompaniesList: React.FC<{ items: ItemCompany[] }> = ({ items }) => 
 						/>
 					</label>
 					<label className={style.modal__checkbox} htmlFor="isWorkersDataInputs">
-						<p>Ввести данные сотрудников</p>
+						<p>Ввести данные сотрудников вручную</p>
 						<input
 							type="checkbox"
 							name="isWorkersDataInputs"
