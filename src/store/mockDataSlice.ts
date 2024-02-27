@@ -191,6 +191,12 @@ const mockDataSlice = createSlice({
 				//reset selectedWorkersIds to empty
 				state.selectedWorkersIds = [];
 			}
+
+			// in case there is flag isAllWorkersChecked turned to on
+			// we need to turn it off
+			if (state.isAllWorkersChecked) {
+				state.isAllWorkersChecked = false;
+			}
 		},
 		createNewCompany: (
 			state,
@@ -320,18 +326,38 @@ const mockDataSlice = createSlice({
 
 					injectionWithWorkers.workersList[workerId] = newWorker;
 				});
+			}
 
-				//determine existed company to workers injection
-				const companyToInjection = state.listedCompanies[employerCompanyId];
-				// merge existed company workersList with injection
-				companyToInjection.workersList = Object.assign(
+			//determine existed company to workers injection
+			const companyToInjection = state.listedCompanies[employerCompanyId];
+			// merge existed company workersList with injection
+			companyToInjection.workersList = Object.assign(
+				{},
+				companyToInjection.workersList,
+				injectionWithWorkers.workersList
+			);
+
+			// update workers quantity
+			companyToInjection.workersQuantity = Object.keys(companyToInjection.workersList).length;
+
+			// if threre is selected companies includes
+			// current company with workers injection
+			// it is needed to udate listed workers with injected ones
+			if (state.selectedCompaniesIds.includes(companyToInjection.id)) {
+				// state.listedWorkers need to add Record<worker.id,workerItem>
+
+				state.listedWorkers = Object.assign(
 					{},
-					companyToInjection.workersList,
+					state.listedWorkers,
 					injectionWithWorkers.workersList
 				);
-
-				// update workers quantity
-				companyToInjection.workersQuantity = Object.keys(companyToInjection.workersList).length;
+				// in cases when isAllWorkersChecked flag is on
+				// update selected workers array
+				if (state.isAllWorkersChecked) {
+					state.selectedWorkersIds = state.selectedWorkersIds.concat(
+						Object.keys(injectionWithWorkers.workersList)
+					);
+				}
 			}
 		},
 		deselectAllCompanyItems: (store) => {

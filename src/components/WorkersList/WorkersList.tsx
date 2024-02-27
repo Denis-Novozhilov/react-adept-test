@@ -424,11 +424,6 @@ export const WorkersList: React.FC<{ items: ItemWorker[] }> = ({ items }) => {
 											workersCsvData: formState.companyWorkersDataCsv
 										})
 									);
-
-									dispatch(toggleAllWorkersCheck(false));
-									dispatch(toggleAllCompaniesCheck(false));
-									dispatch(deselectAllCompanyItems());
-									dispatch(deselectAllWorkersItems());
 									setModalIsActive(false);
 								} else if (formRef.current && formRef.current.checkValidity()) {
 									dispatch(
