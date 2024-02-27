@@ -270,6 +270,24 @@ const mockDataSlice = createSlice({
 			newCompany.workersQuantity = Object.keys(newCompany.workersList).length;
 
 			state.listedCompanies[companyId] = newCompany;
+
+			// if is flag isAllCompaniesChecked is turned on
+			// we need to add company to selected companies
+			if (state.isAllCompaniesChecked) {
+				state.selectedCompaniesIds.push(newCompany.id);
+
+				// if is flag isAllCompaniesChecked is turned on
+				// also we need to add newcomers workers to listed workers
+				state.listedWorkers = Object.assign({}, state.listedWorkers, newCompany.workersList);
+
+				// also if is flag isAllWorkersChecked is turned on
+				// we need to include newcomers workers to selected workers
+				if (state.isAllWorkersChecked) {
+					state.selectedWorkersIds = state.selectedWorkersIds.concat(
+						Object.keys(newCompany.workersList)
+					);
+				}
+			}
 		},
 		injectWorkersToExistedCompany: (
 			state,
